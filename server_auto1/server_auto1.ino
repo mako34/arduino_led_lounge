@@ -24,6 +24,8 @@ String readString;
 int ledPinRed = 3;
 int ledPinGreen = 9;
 int ledPinBlue = 5;
+int ledConnected = 7;
+
 
 
 // Enter a MAC address and IP address for your controller below.
@@ -50,6 +52,7 @@ void setup() {
   pinMode(ledPinRed, OUTPUT);
   pinMode(ledPinGreen, OUTPUT);
   pinMode(ledPinBlue, OUTPUT);
+  pinMode(ledConnected, OUTPUT);
 
 
 
@@ -58,7 +61,7 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-  Serial.println("Ethernet WebServer Example");
+  Serial.println("Welcome master mako");
 
   // start the Ethernet connection and the server:
   Ethernet.begin(mac, ip);
@@ -90,6 +93,10 @@ if (client) {
         while (client.connected()) {
             if (client.available()) {
                 char c = client.read();
+
+                digitalWrite(ledConnected, HIGH); // connected
+
+                
 
                 //read char by char HTTP request
                 if (readString.length() < 100) {
@@ -180,6 +187,8 @@ if (client) {
                     readString="";
 
                 }
+            }else{
+                     digitalWrite(ledConnected, LOW); // connected
             }
         }
     }
