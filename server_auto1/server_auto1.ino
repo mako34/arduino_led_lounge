@@ -21,7 +21,10 @@
 #include <Ethernet.h>
 
 String readString;
-int ledPin = 3;
+int ledPinRed = 3;
+int ledPinGreen = 9;
+int ledPinBlue = 5;
+
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
@@ -44,7 +47,10 @@ void setup() {
   //Ethernet.init(15);  // ESP8266 with Adafruit Featherwing Ethernet
   //Ethernet.init(33);  // ESP32 with Adafruit Featherwing Ethernet
 
-  pinMode(ledPin, OUTPUT);
+  pinMode(ledPinRed, OUTPUT);
+  pinMode(ledPinGreen, OUTPUT);
+  pinMode(ledPinBlue, OUTPUT);
+
 
 
   // Open serial communications and wait for port to open:
@@ -110,8 +116,16 @@ if (client) {
                     client.println("<hr>");
                     client.println("<br>");
 
-                    client.println("<H2><a href=\"/?LEDON\"\">Turn On LED</a><br></H2>");
-                    client.println("<H2><a href=\"/?LEDOFF\"\">Turn Off LED</a><br></H2>");
+                    client.println("<H2><a href=\"/?LEDONRED\"\">Turn On Red LED</a><br></H2>");
+                    client.println("<H2><a href=\"/?LEDOFFRED\"\">Turn Off Red LED</a><br></H2>");
+                    client.println("<br>");
+                    client.println("<H2><a href=\"/?LEDONGREEN\"\">Turn On Green LED</a><br></H2>");
+                    client.println("<H2><a href=\"/?LEDOFFGREEN\"\">Turn Off Green LED</a><br></H2>");
+                    client.println("<br>");
+                    client.println("<H2><a href=\"/?LEDONBLUE\"\">Turn On Blue LED</a><br></H2>");
+                    client.println("<H2><a href=\"/?LEDOFFBLUE\"\">Turn Off Blue LED</a><br></H2>");
+                    client.println("<br>");
+
 
                     client.println("</BODY>");
                     client.println("</HTML>");
@@ -121,18 +135,47 @@ if (client) {
                     client.stop();
 
                     // control arduino pin
-                    if(readString.indexOf("?LEDON") > -1) //checks for LEDON
+                    if(readString.indexOf("?LEDONRED") > -1) //checks for LEDON
                     {
-                            digitalWrite(ledPin, LOW); // set pin low
+                            digitalWrite(ledPinRed, LOW); // set pin low
                                 Serial.println("Low");
                     }
                     else{
-                        if(readString.indexOf("?LEDOFF") > -1) //checks for LEDOFF
+                        if(readString.indexOf("?LEDOFFRED") > -1) //checks for LEDOFF
                         {
-                            digitalWrite(ledPin, HIGH); // set pin high
+                            digitalWrite(ledPinRed, HIGH); // set pin high
                             Serial.println("Higher");
                         }
                     }
+
+                    if(readString.indexOf("?LEDONGREEN") > -1) //checks for LEDON
+                    {
+                            digitalWrite(ledPinGreen, LOW); // set pin low
+                                Serial.println("Low");
+                    }
+                    else{
+                        if(readString.indexOf("?LEDOFFGREEN") > -1) //checks for LEDOFF
+                        {
+                            digitalWrite(ledPinGreen, HIGH); // set pin high
+                            Serial.println("Higher");
+                        }
+                    }
+
+                    if(readString.indexOf("?LEDONBLUE") > -1) //checks for LEDON
+                    {
+                            digitalWrite(ledPinBlue, LOW); // set pin low
+                                Serial.println("Low");
+                    }
+                    else{
+                        if(readString.indexOf("?LEDOFFBLUE") > -1) //checks for LEDOFF
+                        {
+                            digitalWrite(ledPinBlue, HIGH); // set pin high
+                            Serial.println("Higher");
+                        }
+                    }
+
+
+                    
                     //clearing string for next read
                     readString="";
 
